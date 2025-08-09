@@ -11,10 +11,13 @@ class App extends Component {
         };
         this.renderChoice = this.renderBallOrButton.bind(this)
         this.buttonClickHandler = this.buttonClickHandler.bind(this)
+        this.handleArrowKey = this.handleArrowKey.bind(this)
     };
 
     buttonClickHandler() {
-   
+      this.setState({
+        renderBall:true
+      })
    }
     renderBallOrButton() {
 		if (this.state.renderBall) {
@@ -23,10 +26,23 @@ class App extends Component {
 		    return <button onClick={this.buttonClickHandler} >Start</button>
 		}
     }
+   
+   handleArrowKey(e){
+    if (e.key === "ArrowRight"){
+        this.setState((prevState)=>{
+            const newPos = prevState.posi+5;
+            return {
+                posi: newPos,
+                ballPosition: { left: newPos + "px" }
+              };
+        })
+    }
+    }
+
 
     // bind ArrowRight keydown event
     componentDidMount() {
-      
+      document.addEventListener('keydown',this.handleArrowKey);
     }
 
     render() {
